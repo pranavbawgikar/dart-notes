@@ -16,6 +16,9 @@ void main() {
   // var undefined; // If we just declare the variable without intializing its value, Dart would just declare it as `Null`
   print(undefined.runtimeType);
   
+  print(undefined is int); // Output: false, checking the type of the variable at runtime
+  print(undefined is! int); // Output: true
+  
   print(myVar);
   print(doubleVar);
   print(stringVar);
@@ -36,6 +39,27 @@ void main() {
   
   String interpolation = '$undefined, $stringVar'; // Example of String Interpolation in Dart
   print(interpolation);
+  
+  printPrice(price: 5); // Output: The price is 5
+  printPrice(); // Output: Free
+  
+  final age = 22; // Both `const` and `final` does the same work - create  constant variable
+  const agev2 = 23;
+  
+  final date = DateTime.now(); // Error: The constructor being called isn't a const constructor
+  // We can't use `const` here because we don't know when the program will run, making the value of the variable runtime dependent
+  // Hence, we make use of the `final` keyword instead of the `const`
+  
+  // date = DateTime.now(); // Error: Const variables can't be assigned a value
+  
+}
+
+void printPrice({int? price}) {
+  if (price == null) {
+    print('Free');
+  } else {
+    print('The price is $price');
+  }
 }
 
 // Dart is a strongly-typed or type-safe language, for instance, if you try to store a decimal value inside an integer variable you would encounter an error
