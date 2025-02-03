@@ -16,9 +16,6 @@ void main() {
   // var undefined; // If we just declare the variable without intializing its value, Dart would just declare it as `Null`
   print(undefined.runtimeType);
   
-  print(undefined is int); // Output: false, checking the type of the variable at runtime
-  print(undefined is! int); // Output: true
-  
   print(myVar);
   print(doubleVar);
   print(stringVar);
