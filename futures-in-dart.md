@@ -33,6 +33,7 @@ void main() {
   // Future completed with: Data loaded
 }
 ```
+The `fetchData` function simulates a network request by returning a `Future` that completes after a 2 second delay with the string `Data Loaded`. When the `fetchData` is called in the `main` function, it returns immediately with an uncompleted `Future`. We print the uncompleted `Future` object, which outputs something like `Instance of '_Future<String>'`. We then register a callback using the `then` method to handle the value once the `Future` completes. After the 2 second delay, the `Future` completes, and the callback is invoked, printing `Future completed with: Data loaded`.
 #### Completed
 If the asynchronous operation succeeds, the `future` completes with a value. Otherwise, it completes with an error.
 ##### Completing with a value
