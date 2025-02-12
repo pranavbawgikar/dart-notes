@@ -1,4 +1,5 @@
 ## Stateful Widgets
+These widgets can change their state over time in response to user interactions or other factors. Use them when the UI needs to update dynamically. Examples include Checkbox, Slider and TextField.
 ```dart
 import 'package:flutter/material.dart';
 
