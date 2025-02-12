@@ -1,5 +1,5 @@
 ## Stateless Widgets
-In FLutter, widgets are the building blocks of the UI. They can be categorized into two types: Stateless Widgets and Stateful Widgets. Stateless Widgets are immutable, meaning their properties can't change once they're built. They can be used when the UI doesn't need to update dynamically. Stateless widgets (`StatelessWidget`) are those type of widgets where the state once created cannot be changed. That is, it can run only once which is when the app is loaded. Examples include text, icon and image.
+In FLutter, widgets are the building blocks of the UI. They can be categorized into two types: Stateless Widgets and <a href="https://github.com/PranavBawgikar/dart-notes/edit/main/stateful-widgets.md">Stateful Widgets</a>. Stateless Widgets are immutable, meaning their properties can't change once they're built. They can be used when the UI doesn't need to update dynamically. Stateless widgets (`StatelessWidget`) are those type of widgets where the state once created cannot be changed. That is, it can run only once which is when the app is loaded. Examples include text, icon and image.
 
 Example 1:
 ```dart
@@ -55,3 +55,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 ```
+Certain widgets like `Text`, require a `Directionality` widget to determine the text's reading direction. In Flutter, the `Directionality` widget is typically provided by higher-level widgets such as `MaterialApp` or `WidgetsApp`. If you directly run `HomeScreen` without wrapping it in a `MaterialApp` it will lead to an error: `No directionality widget found`. Always use `MaterialApp` or `WidgetsApp` at the root level of your tree hierarchy.
