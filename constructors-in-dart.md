@@ -1,5 +1,96 @@
-## Constructors
-Constructors are special functions that create instances of classes. Different types of constructors in Dart:
+## Object Oriented Programming & Constructors
+### Inheritance
+Inheritance is the mechanism by which one class (child or subclass) can reuse, extend or modify the behavior of another class (parent or superclass). This is crucial in Flutter when you want to build upon existing widgets or create custom widget hierarchies.
+#### Single Inheritance
+Dart supports only single inheritance (a class can extend only one other class). However, you can mix in additional behavior using mixins.
+
+Example:
+```dart
+class Animal {
+  void eat() {
+    print('eating food');
+  }
+}
+
+class Dog extends Animal {
+  void bark() {
+    print('barking');
+  }
+}
+
+void main() {
+  Dog dog = Dog();
+  dog.eat();
+  dog.bark();
+}
+```
+#### Calling the Superclass Constructor
+In the subclass constructor, you can call the parent’s constructor using the `super` keyword. This is necessary when the superclass does not have a default constructor.
+
+Example:
+```dart
+class Employee {
+  String name;
+  double salary;
+  
+  Employee(this.name, this.salary);
+}
+
+class Manager extends Employee {
+  int teamSize;
+  
+  // Calling super class constructor using `super`
+  Manager(String name, double salary, this.teamSize) : super(name, salary);
+}
+```
+#### Method Overriding & the @override Annotation
+Subclasses can override methods defined in the superclass to change or extend behavior. Using the @override annotation is considered best practice as it makes your intent explicit.
+
+Example:
+```dart
+class Animal {
+  void makeSound() {
+    print('animal makes a sound.');
+  }
+}
+
+class Cat extends Animal {
+  @override
+  void makeSound() {
+    print('meow');
+  }
+}
+
+void main() {
+  Cat cat = Cat();
+  cat.makeSound();
+}
+```
+#### Abstract Classes
+
+### Encapsulation
+Dart uses a simple convention to indicate privacy. Prefixing a member's name with an underscore (_) makes it private to the library. This helps in hiding internal implementation details.
+
+Example:
+```dart
+class BankAccount {
+  double _balance; // Private
+
+  BankAccount(this._balance);
+
+  // Public getter
+  double get balance => _balance;
+
+  // Public method to modify balance safely
+  void deposit(double amount) {
+    if(amount > 0) {
+      _balance = amount;
+    }
+  }
+}
+```
+
+Constructors are special functions that create instances of classes. In Flutter, every widget has a constructor that defines it's configurations. Different types of constructors in Dart:
 1. Generative Constructors
 2. Default Constructors
 3. Named Constructors
@@ -96,3 +187,24 @@ void main() {
 }
 ```
 The `required` keyword is used in named parameters to indicate that a parameter must be provided when calling a function or constructor.
+
+### Factory Constructors
+These aren't required to return new instances every time, they can return cached instances or even objects of subtypes. They are useful for implementing patterns like singleton.
+
+Example:
+```dart
+class Logger {
+  final String name;
+  static final Map<String, Logger> _cache = {};
+
+  factory Logger(String name) {
+    return _cache.putIfAbsent(name, () => Logger._internal(name));
+  }
+
+  Logger._internal(this.name);
+
+  void log(String message) {
+    print('$[name] $message');
+  }
+}
+```
