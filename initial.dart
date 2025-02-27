@@ -11,8 +11,10 @@ void main() {
   myVar = 1000; // Changing the value of `myVar` variable
   
   num myNumber = 1.3; // Data type that stores both integer and double values
-  
+
+  // Dart infers the variable type from it's assigned value
   var undefined = 'Hi'; // Local integer variable, since we are storing an integer value inside the variable
+  // Hi is inferred as String
   // var undefined; // If we just declare the variable without intializing its value, Dart would just declare it as `Null`
   print(undefined.runtimeType);
   
