@@ -1,5 +1,6 @@
 void main () {
-  const minutesConst = 60;
+  const minutesConst = 60; // Compile-time constant
+  // `final` is initialized once at runtime
   var userName = '@pranavbawgikar';
   var followerCount = 1260000;
   var followingCount = 10;
