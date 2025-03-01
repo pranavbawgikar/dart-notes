@@ -66,7 +66,80 @@ void main() {
   cat.makeSound();
 }
 ```
-#### Abstract Classes
+#### Abstract Class
+Abstraction refers to hiding the implementation details from the end user. In Dart, an abstract class can contain both abstract methods (methods without implementation) and concrete methods (methods with implementation). You cannot create an instance of the abstract class. Abstract methods are declared without a body, serving as a contract that any subclass ust fulfil by providing its own implementation.
+
+There are no explicit interfaces in Dart, instead we have implicit interfaces. Every class in Dart defines an implicit interface.
+
+To declare an abstract class, use the `abstract` keyword:
+```dart
+abstract class Animal {
+  void makeSound();
+}
+```
+Any class that extends `Animal` must provide an implementation for `makeSound()`.
+
+Dart offers two primary ways to utilize abstract classes:
+##### Extending abstract classes
+A subclass can inherit from an abstract class using the `extends` keyword. This allows the subclass to inherit the abstract class' methods (which must be implemented) and any concrete methods or properties.
+```dart
+class Dog extends Animal {
+  @override
+  void makeSound() {
+    print('bark');
+  }
+}
+
+void main() {
+  Dog dog = Dog();
+  dog.makeSound();
+}
+```
+##### Implementing abstract classes
+A class can implement an abstract class using the `implements` keyword. This requires the class to provide concrete implementations for all methods defined in the abstract class, but it doesn’t inherit any method implementations from the abstract class.
+```dart
+void main() {
+  Cat cat = Cat();
+  cat.makeSound();
+}
+
+class Cat implements Animal {
+  void makeSound() {
+    print('meow');
+  }
+}
+```
+Another Example:
+```dart
+abstract class Shape {
+  double area();
+}
+
+class Rectangle implements Shape {
+  final double width;
+  final double height;
+  
+  Rectangle(this.width, this.height);
+  
+  double area() => width * height;
+}
+
+class Circle implements Shape {
+  final double radius;
+  
+  Circle(this.radius);
+  
+  double area() => 3.14 * radius * radius;
+}
+
+void main() {
+  Shape rectangle = Rectangle(12, 24);
+  Shape circle = Circle(34);
+  
+  print('The area of rectangle is ${rectangle.area()}');
+  print('The area of circle is ${circle.area()}');
+}
+```
 
 ### Encapsulation
 Dart uses a simple convention to indicate privacy. Prefixing a member's name with an underscore (_) makes it private to the library. This helps in hiding internal implementation details.
