@@ -43,6 +43,72 @@ class Manager extends Employee {
   Manager(String name, double salary, this.teamSize) : super(name, salary);
 }
 ```
+#### Constructor Chaining
+In Dart, when you create an instance of a subclass, the superclass' default constructor is automatically invoked first. This is why when `Wolf wolf = Wolf();` is executed in `main()`, it first prints 'calling from Animal' and then 'calling from Wolf.'
+```dart
+class Animal {
+  Animal() {
+    print('calling from Animal');
+  }
+}
+
+class Wolf extends Animal {
+  Wolf() {
+    print('calling from Wolf');
+  }
+}
+
+void main() {
+  Wolf wolf = Wolf();
+}
+// calling from Animal
+// calling from Wolf
+```
+Now, if we tweak the program a bit:
+```diff
+class Animal {
+  Animal() {
+    print('calling from Animal');
+  }
+}
+
+class Wolf extends Animal {
++  Wolf() : super() {
+    print('calling from Wolf');
+  }
+}
+
+void main() {
+  Wolf wolf = Wolf();
+}
+// calling from Animal
+// calling from Wolf
+```
+Nothing happens. It does not change anything as the `super` keyword is already present at that position and that keyword basically says that "Hey, before you check this constructor, you need to check the constructor of the super class!" When a subclass needs to pass parameters to its superclass constructor, initializer lists facilitate this by allowing arguments to be sent upstream before the subclass's constructor body executes.
+
+For Example:
+```dart
+class Animal {
+  Animal(String nature) {
+    print('$nature Animal calling');
+  }
+}
+
+class Wolf extends Animal {
+  Wolf(String name, String nature) : super(nature) {
+    print('$name Wolf calling');
+  }
+}
+
+void main() {
+  Wolf wolf = Wolf('luna', 'moon');
+}
+
+// moon Animal calling
+// luna Wolf calling
+```
+The `Wolf` constructor is called with `name = 'luna'` and `nature = 'moon'`. The `: super(nature)` part of the `Wolf` constructor calls the `Animal` constructor with the parameter 'moon'. After the `Animal` constructor finishes, the `Wolf` constructor continues and prints.
+
 #### Method Overriding & the @override Annotation
 Subclasses can override methods defined in the superclass to change or extend behavior. Using the @override annotation is considered best practice as it makes your intent explicit.
 
