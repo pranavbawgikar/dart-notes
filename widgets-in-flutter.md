@@ -337,3 +337,192 @@ If you need to access an ancestor widget that is not available in the current co
 `BuildContext` knows where a widget is located in the widget tree which is essential for tasks like theme retrieval or navigation. It enables a widget to access information from it's ancestor widgets. For example, using `Theme.of(context)` retrieves the nearest `Theme` ancestor, allowing the widget to adapt to the application's theme.
 
 Each widget has it's own `BuildContext`, which ensures that when methods like `Scaffold.of(context)` are called, they return the `Scaffold` related to that specific context.
+
+### ListView
+Consider a simple `Scaffold` with a `Column` widget. Inside the `Column` we have a basic `Container` of height 200. Now, in `Column` we can have multiple widgets inside and if you go adding widgets in the `Column`, it will likely get full and you will encounter something like this:
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const HomePage());
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+<img width="501" alt="Screenshot 2025-03-06 at 1 05 51 AM" src="https://github.com/user-attachments/assets/3a17269f-adf5-482e-92ab-6699b44c1f3f" />
+
+
+Error:
+```diff
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 21 pixels on the bottom.
+```
+This is a situation where it will be appropriate to use a `ListView` and the crucial feature of a `ListView` is that it is scrollable.
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const HomePage());
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        appBar: AppBar(),
+        body: ListView(
+          // physics: NeverScrollableScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                color: Colors.deepPurple[400],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+You can also disable scrolling for your list by using the `physics: NeverScrollableScrollPhysics(),` property. Another good coding practice is to encapsulate the code when you have a lot of widgets in your list. 
+
+For example:
+
+sqaure.dart
+```dart
+import 'package:flutter/material.dart';
+
+class MySquare extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 200,
+        color: Colors.deepPurple[400],
+      ),
+    );
+  }
+}
+```
+main.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(const HomePage());
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        appBar: AppBar(),
+        body: ListView(
+          // physics: NeverScrollableScrollPhysics(),
+          children: [
+            MySquare(),
+            MySquare(),
+            MySquare(),
+            MySquare(),
+            MySquare(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+### `ListView.builder`
+`ListView.builder` creates the list dynamically. In practice, you might not know how many objects to place in there, for instance, when we think of the instagram feed, it's never a fixed number of posts, in that case we would require a dynamic list.
+
+In the `itemBuilder` we give the current context and the index and return the `MySquare()`. When you use builders you need to specify item count. But, what's really useful about this is that you don't have to specify a fixed number, you can just specify it as `_posts.length` and it will automatically create squares corresponding to the items in the list. 
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+  final List _posts = [
+    'post 1',
+    'post 2',
+    'post 3',
+    'post 4'
+  ];
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        body: ListView.builder(
+          itemCount: _posts.length, // itemCount: 2,
+          itemBuilder: (context, index) {
+            return MySquare();
+          }),
+      ),
+    );
+  }
+}
+```
