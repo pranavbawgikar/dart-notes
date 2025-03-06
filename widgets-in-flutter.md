@@ -630,3 +630,66 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+### SingleChildScrollView
+Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                color: Colors.deepOrangeAccent,
+                child: const Center(
+                  child: Text(
+                    'Static Content',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('Item ${index + 1}'),
+                  );
+                },
+              ),
+              Container(
+                height: 200,
+                color: Colors.indigo,
+                child: const Center(
+                  child: Text(
+                      'More Static Content',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20
+                      )
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+```
