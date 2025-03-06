@@ -17,6 +17,8 @@ Scaffold(
   ),
 );
 ```
+<br />
+
 ### InkWell
 In Flutter, the `InkWell` widget provides a visual response when a user interacts with a part of the application. It adds a 'ripple' effect to it's child widget upon touch. It can detect various gestures like taps, double taps, long presses, etc. In essence, `InkWell` is used whenever you want to make a non-interactive widget respond to touch or a visual effect.
 
@@ -79,6 +81,9 @@ The `InkWell` widget must have a `material` widget as an ancestor. In the above 
 This error occurs when the `ScaffoldMessenger.of(context)` method cannot locate a `ScaffoldMessenger` ancestor in the widget tree. This typically happens when the `context` used to call `ScaffoldMessenger.of(context)` is not under a `MaterialApp` or `Scaffold` widget, which are responsible for providing the `ScaffoldMessenger` context. The `onTap` callback of the `InkWell` widget attempts to show a `SnackBar` using `ScaffoldMessenger.of(context)`. However, if the `context` at this point does not have a `ScaffoldMessenger` ancestor usually introduced by the `MaterialApp`, Flutter would throw this exception.
 
 To resolve this issue, we can ensure that the `context` used to call `ScaffoldMessenger.of(context)` is a descendant of a `ScaffoldMessenger` widget. One common approach is to wrap the widget that contains the `InkWell` in a `Builder` widget. The `Builder` widget provides a new context that is a descendant of the `Scaffold` which allows `ScaffoldMessenger.of(context)` to find the appropriate ancestor.
+
+<br />
+
 ### Text
 The `Text` widget displays a string of text with single style.
 
@@ -111,16 +116,33 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+<br />
+
 ### Center
 In Dart, functions and constructors can have positional and named parameters. Positional parameters are specified in order and without names, while named parameters are identified by their names.
 
 The `Center` widget accepts only one positional argument: the `child` parameter.
 
+<br />
 
 ### Column & Row
-`Column` and `Row` are flex widgets that arrange their children vertically and horizontally, respectively.
+`Column` and `Row` are flex widgets that arrange their children vertically and horizontally, respectively. In Flutter, the `mainAxisAlignment` and `crossAxisAlignment` properties are primarily used in the `Row` and `Column` widgets. These properties control how child widgets are aligned along the main and cross axes within these layouts.
 
-Example:
+<br />
+
+#### `mainAxisAlignment`
+Determines how children are aligned along the main axis (the primary direction) of the `Row` or `Column`.
+- In a `Row`, this aligns children horizontally.
+- In a `Column`, this aligns children vertically.
+
+<br />
+
+#### `crossAxisAlignment`
+Determines how children are aligned along the cross axis (perpendicular to the main axis).
+- In a `Row`, this aligns children vertically.
+- In a `Column`, this aligns children horizontally.
+
+Example 1:
 ```dart
 import 'package:flutter/material.dart';
 
@@ -167,6 +189,79 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
+Example 2:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+          body: Stack(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.indigo,
+                    height: 50,
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.indigoAccent,
+                    height: 50,
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.lightGreen,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: Colors.amber,
+                    height: 50,
+                    width: 100,
+                  ),
+                  Container(
+                    color: Colors.amberAccent,
+                    height: 50,
+                    width: 100,
+                  ),
+                  Container(
+                    color: Colors.indigoAccent,
+                    height: 50,
+                    width: 100,
+                  ),
+                ],
+              )
+            ],
+          ),
+      ),
+    );
+  }
+}
+```
+In the `Row`, `mainAxisAlignment: MainAxisAlignment.spaceAround` distributes the child widgets horizontally with equal space around them and `crossAxisAlignment: CrossAxisAlignment.center` centers the children vertically within the row.
+
+In the `Column`, `mainAxisAlignment: MainAxisAlignment.spaceBetween` places the first child at the top and the last child at the bottom, with the middle child centered vertically between them and `crossAxisAlignment: CrossAxisAlignment.start` aligns the children to the start of the horizontal axis (left side).
+
+<br />
+
 ### Container
 The `Container` widget can contain a child widget and apply padding, margins, borders, and background color.
 
@@ -200,6 +295,8 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+<br />
+
 ### Stack
 The `Stack` widget allows for the overlaying of widgets on top of each other.
 
@@ -285,6 +382,7 @@ void main() {
   ));
 }
 ```
+<br />
 
 ### SizedBox
 The `SizedBox` widget is used to create a box with a specified size.
@@ -329,7 +427,7 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-
+<br />
 
 ### Builder
 If you need to access an ancestor widget that is not available in the current context, wrapping the desired widget with a `Builder` provides a new context that is a descendant of the desired ancestor. While every widget has a `build` method that provides it's `BuildContext`, there are scenarios where the immediate `BuildContext` does not have access to certain ancestors in the widget tree. This is where the `Builder` widget becomes useful.
@@ -337,6 +435,8 @@ If you need to access an ancestor widget that is not available in the current co
 `BuildContext` knows where a widget is located in the widget tree which is essential for tasks like theme retrieval or navigation. It enables a widget to access information from it's ancestor widgets. For example, using `Theme.of(context)` retrieves the nearest `Theme` ancestor, allowing the widget to adapt to the application's theme.
 
 Each widget has it's own `BuildContext`, which ensures that when methods like `Scaffold.of(context)` are called, they return the `Scaffold` related to that specific context.
+
+<br />
 
 ### ListView
 Consider a simple `Scaffold` with a `Column` widget. Inside the `Column` we have a basic `Container` of height 200. Now, in `Column` we can have multiple widgets inside and if you go adding widgets in the `Column`, it will likely get full and you will encounter something like this:
@@ -492,6 +592,8 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+<br />
+
 ### `ListView.builder`
 `ListView.builder` creates the list dynamically. In practice, you might not know how many objects to place in there, for instance, when we think of the instagram feed, it's never a fixed number of posts, in that case we would require a dynamic list.
 
@@ -526,6 +628,7 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+<br />
 
 ### Expanded
 The `Expanded` widget needs to be inside of either a `Row` or `Column` and it requires some space to fill. This widget has a `flex` property which is initially set to 1.
@@ -582,6 +685,7 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+<br />
 
 ### Flexible
 Example:
@@ -630,7 +734,11 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+<br />
+
 ### SingleChildScrollView
+The `SingleChildScrollView` widget in Flutter allows a single child to be scrollable when it exceeds the available space. Consider an example, where you have a scrollable widget like a `ListView`, nested within another scrollable widget, such as a `SingleChildScrollView`.
+
 Example:
 ```dart
 import 'package:flutter/material.dart';
@@ -693,3 +801,85 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+<br />
+
+### ConstrainedBox
+This widget lets you specify the minimum and maximum heights of your child widgets. A constraint is nothing more than a set of 4 doubles: minimum heigth and width and maximum height and width. In a tree of widgets, we have parent widgets, these parent widgets give their constraints down to their child widgets.
+
+`BoxConstraints` in Flutter, defines the constraints on the size of a widget. In simple terms, it describes the range of permissible sizes a widget can occupy within its parent. There are different types of `BoxConstraints`.
+
+#### Tight Constraints
+These force a widget to be of a specific size by setting both the minimum and maximum dimensions to the values.
+
+Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+          body: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                // Tight Constraints
+                minHeight: 100,
+                minWidth: 100,
+                maxHeight: 200,
+                maxWidth: 200,
+              ),
+              child: Container(
+                color: Colors.blueAccent,
+              ),
+            ),
+          )
+      ),
+    );
+  }
+}
+```
+
+#### Unconstrained Box / Loose Constraints
+Loose constraints give a widget some freedom within a range. For example, you might only set a maximum width and height if you want.
+
+Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+          body: Center(
+            child: Container(
+              // Loose Constraints
+              constraints: BoxConstraints(
+                maxWidth: 200,
+                maxHeight: 300,
+              ),
+              child: Text(
+                'Waiting for connection from debug service on Chrome... Restarted application in 1,003ms. Performing hot restart...',
+                style: TextStyle(color: Colors.white),),
+              color: Colors.indigo,
+            )
+          )
+      ),
+    );
+  }
+}
+```
+In this example, the container can grow up to 200 pixels in width and 300 pixels in height, but it’s not forced to be exactly those dimensions. If the content (in this case, the `Text` widget) is smaller, the container will shrink to fit.
