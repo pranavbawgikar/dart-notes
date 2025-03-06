@@ -526,3 +526,107 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
+### Expanded
+The `Expanded` widget needs to be inside of either a `Row` or `Column` and it requires some space to fill. This widget has a `flex` property which is initially set to 1.
+
+Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+                // flex: 4,
+                child: Container(
+                  color: Colors.blueGrey,
+                )
+            ),
+            Expanded(
+              flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Container(
+                          color: Colors.green,
+                        )
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.black,
+                      ),
+                    )
+                  ],
+                )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+### Flexible
+Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:untitled/square.dart';
+
+void main() {
+  runApp(HomePage());
+}
+
+class HomePage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        body: Column(
+          children: [
+            Flexible(
+              flex: 5,
+              child: Container(
+                // height: 50,
+                color: Colors.black38,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Container(
+                // height: 50,
+                color: Colors.blueAccent,
+              ),
+            ),
+            Flexible(
+              flex: 4,
+              child: Container(
+                // height: 50,
+                color: Colors.cyanAccent,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
