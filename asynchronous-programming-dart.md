@@ -13,6 +13,7 @@ _Example_: Imagine a script that reads data from a file and then processes it. I
 _Example_: Consider a web server handling multiple client requests. Using asynchronous operations, the server can initiate data retrieval for one client and, while waiting for the data, start handling another client's request. This ensures the server remains responsive and efficient, even under heavy load.
 
 Such asynchronous computations usually provide their result as a `Future` or if the result has multiple parts, as a `Stream`. To interact with these asynhronous results, you can use the `async` and `await` keyword.
+
 ### Callbacks
 Read more about the definition of a callback function <a href="https://github.com/PranavBawgikar/js-notes/blob/main/javascript/callback-function.md">here</a>.
 
@@ -77,8 +78,10 @@ The `main` function is also marked as `async` to allow the use of `await` within
 
 
 ### Futures
+
 #### `Future` class
 A `future` is an instance of `Future` class. A `future` represents the result of an asynchronous operation and can have two states: completed and uncompleted.
+
 ##### Uncompleted
 When you call an asynchrnous function, it immediately returns a `Future` object that is in an uncompleted state. This `Future` represents a promise that a result (or an error) will be available at some point in the future.
 That `future` is waiting for the function's asynchronous operation to finish or to throw an error.
@@ -109,9 +112,17 @@ void main() {
 }
 ```
 The `fetchData` function simulates a network request by returning a `Future` that completes after a 2 second delay with the string `Data Loaded`. When the `fetchData` is called in the `main` function, it returns immediately with an uncompleted `Future`. We print the uncompleted `Future` object, which outputs something like `Instance of '_Future<String>'`. We then register a callback using the `then` method to handle the value once the `Future` completes. After the 2 second delay, the `Future` completes, and the callback is invoked, printing `Future completed with: Data loaded`.
+
 ##### Completed
 If the asynchronous operation succeeds, the `future` completes with a value. Otherwise, it completes with an error.
+
 ###### Completing with a value
 A `future` of type `Future<T>` completes with a value of type `T`. For example, a `future` with type `Future<String>` produces a string value. If a `future` doesn't produce a usable value, then the future's type if `Future<void>`.
+
 ###### Completing with an error
 If the asynchronous operation performed by the function fails for any reason, the `future` completes with an error.
+
+### FutureBuilder
+`FutureBuilder` is used to build Flutter widgets when a Future is involved. `FutureBuilder` lets you determine the current state of a Future. Imagine you're building a Flutter app, and you want to show some information that takes a bit of time to get, like fetching data from the internet. The FutureBuilder widget helps you manage this by automatically updating your app's display based on whether the data is still loading, has arrived, or if there was an error.
+
+Here's a simple way to understand it. When waiting for data or fetching the data, `FutureBuilder` can show a loading spinner to let users know something is happening. When data is received successfully, `FutureBuilder` displays it on the screen and if an error occurs or if there's a problem fetching the data, `FutureBuilder` shows an error message.
