@@ -44,34 +44,53 @@ class _MyStatefulWidget extends State<MyStatefulWidget> {
 }
 ```
 ### `createState()`
-For Stateful widgets, the `createState()` method is called first which creates the state of the app and also returns an instance of the associated state (in this case, `_MyStatefulWidgetState()`)
+For Stateful widgets, the `createState()` method is called first which creates the state of the app and also returns an instance of the associated state (in this case, `_MyStatefulWidgetState()`). In Flutter, every `StateFulWidget` must implement the `createState` method to return an instance of its associated `State` class, else it gives a 'The Non-abstract class is missing implementation for these members' error.
 ```diff
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MyStatefulWidget extends StatefulWidget() {
-  MyStatefulWidget({super.key});
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+void main() {
+  runApp(MyApp());
 }
 
-class _MyStatefulWidget extends State<MyStatefulWidget> {
-+  @override
-+` void initState() {
-+    // TODO: Implemnent initState
-+    super.initState();
-+  }
+class MyApp extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
 
-  @override
+class _MyAppState extends State<MyApp> {
+  int count = 0;
+
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
-      ), // Center
-    ); // Scaffold
+    return MaterialApp(
+      title: 'Demo',
+      home: Scaffold(
+        appBar: AppBar(title: Text('Flutter setState')),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              count++;
+            });
+          },
+          child: Icon(Icons.add),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                count.toString(),
+                style: TextStyle(fontSize: 50),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 ```
+`setState()` is a method provided by the `State` class which is a mixin used with Stateful widgets. It is used to signal the framework that the internal state of a stateful widget has changed and needs to be rebuilt.
+
 ### `initState()`
 The `initState()` method runs once after the constructor of the app and `createState()` is called. In other words, it is invoked once the State object is inserted into the widget tree. It's used for one-time initialization, such as setting up listeners or initializing data. Let's look at an example
 ```diff
