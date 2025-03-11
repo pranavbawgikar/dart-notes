@@ -6,7 +6,7 @@
 
 _Example_: Imagine a script that reads data from a file and then processes it. In a synchronous approach, the script will wait (block) until the entire file is read before moving on to processing, even if the file is large and takes time to load.
 
-#### Asynchronous Operations
+#### Asynchronous Operations 
 - Asynchronous operations enable concurrent execution which lets your program complete work while waiting for another operation to finish.
 - Time-consuming operations initiate and then allow the program to continue executing other tasks. Once the operation completes, it signals the program (often through callbacks, promises, or async/await constructs) to handle the result.
 
@@ -76,15 +76,42 @@ The `main` function is also marked as `async` to allow the use of `await` within
 
 `Future<String>` indicates that the future will eventually produce a value of type `String`. 
 
+Example 2:
+```dart
+void main() async {
+  final post = await fetchPost();
+  print(post.title);
+  print(post.userId);
+}
+
+Future<Post> fetchPost() {
+  const delay = Duration(seconds: 3);
+  
+  return Future.delayed(delay, () {
+    return Post('my post', 123);
+  });
+}
+
+class Post {
+  String title;
+  int userId;
+  
+  Post(this.title, this.userId);
+}
+
+// my post
+// 123
+```
+To make a delay we require the duration object and in Dart we make use of the `Duration` class to achieve that. Inside `Duration` we pass a named parameter called `seconds`.
 
 ### Futures
 
 #### `Future` class
-A `future` is an instance of `Future` class. A `future` represents the result of an asynchronous operation and can have two states: completed and uncompleted.
+Futures in Dart are promises in JavaScript. A `future` is an instance of `Future` class. A `future` represents the result of an asynchronous operation and can have two states: completed and uncompleted. They represent the results of an asynchronous task that takes some time to complete.
 
 ##### Uncompleted
-When you call an asynchrnous function, it immediately returns a `Future` object that is in an uncompleted state. This `Future` represents a promise that a result (or an error) will be available at some point in the future.
-That `future` is waiting for the function's asynchronous operation to finish or to throw an error.
+When you call an asynchronous function, it immediately returns a `Future` object that is in an uncompleted state. This `Future` represents a promise that a result (or an error) will be available at some point in the future.
+That `future` is waiting for the function's asynchronous operation to finish or to throw an error. An uncompleted state is a state which the future will have from the moment the request was made up until a response comes back.
 
 For example, when fetching data from a network, you might use the `http` package's `get` method, which returns a `Future` that completes with the server's response:
 ```dart
@@ -114,7 +141,7 @@ void main() {
 The `fetchData` function simulates a network request by returning a `Future` that completes after a 2 second delay with the string `Data Loaded`. When the `fetchData` is called in the `main` function, it returns immediately with an uncompleted `Future`. We print the uncompleted `Future` object, which outputs something like `Instance of '_Future<String>'`. We then register a callback using the `then` method to handle the value once the `Future` completes. After the 2 second delay, the `Future` completes, and the callback is invoked, printing `Future completed with: Data loaded`.
 
 ##### Completed
-If the asynchronous operation succeeds, the `future` completes with a value. Otherwise, it completes with an error.
+If the asynchronous operation succeeds, the `future` completes with a value. Otherwise, it completes with an error. In simple words, a completed state is a state in which the future gets resolved or completed into either a response value or an error.
 
 ###### Completing with a value
 A `future` of type `Future<T>` completes with a value of type `T`. For example, a `future` with type `Future<String>` produces a string value. If a `future` doesn't produce a usable value, then the future's type if `Future<void>`.
