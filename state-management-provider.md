@@ -1,5 +1,5 @@
 ## State Management in Flutter
-In Flutter, managing the state of your application efficiently is crucial for building responsive and maintainable apps.
+In Flutter, managing the state of your application efficiently is crucial for building responsive and maintainable apps. If you want to update the state of your widget within a `StatelessWidget`, the provider package can be used.
 ### `provider` Package
 At it's core, this package facilitates the sharing of data across your application, allowing widgets to listen to and react to changes in the application state.
 ### Key components of Provider
