@@ -44,6 +44,7 @@ In Dart, `Function` is a built-in type that represents a function. Since functio
 `Future.delayed` is a constructor in Dart's `Future` class that creates a future which completes after a specified duration. `Duration` is a class in Dart that represents a span of time. It is used to specify time intervals in various time-related functions. In the context of `Future.delayed`, `Duration` defines how long the future should wait before completing. You can specify duration in different units such as days, hours, minutes, seconds and milliseconds.
 
 ### `async` and `await` Keyword
+The `async` keyword is used to declare a function as an asynchronous function, and it's return type is automatically converted to a `Future` of the return data type.
 Example 1:
 ```dart
 import 'dart:async';
@@ -105,6 +106,7 @@ class Post {
 To make a delay we require the duration object and in Dart we make use of the `Duration` class to achieve that. Inside `Duration` we pass a named parameter called `seconds`.
 
 ### Futures
+In Dart, to perform asynchronous operations we use `Future` class, `async` and `await` keywords. To consume the `Future` in a widget tree we use the `FutureBuilder` widget.
 
 #### `Future` class
 Futures in Dart are promises in JavaScript. A `future` is an instance of `Future` class. A `future` represents the result of an asynchronous operation and can have two states: completed and uncompleted. They represent the results of an asynchronous task that takes some time to complete.
