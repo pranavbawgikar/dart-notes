@@ -44,7 +44,7 @@ class _MyStatefulWidget extends State<MyStatefulWidget> {
 }
 ```
 ### `createState()`
-For Stateful widgets, the `createState()` method is called first which creates the state of the app and also returns an instance of the associated state (in this case, `_MyStatefulWidgetState()`). In Flutter, every `StateFulWidget` must implement the `createState` method to return an instance of its associated `State` class, else it gives a 'The Non-abstract class is missing implementation for these members' error.
+For Stateful widgets, the `createState()` method is called first which creates the state of the app and also returns an instance of the associated state (in this case, `_MyStatefulWidgetState()`). In Flutter, every `StateFulWidget` must implement the `createState` method to return an instance of its associated `State` class, else it gives a 'The Non-abstract class is missing implementation for these members' error. The associated instance returned by the `createState()` method will be responsible for managing the rebuilding of the UI.
 ```diff
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -205,4 +205,4 @@ class _MyStatefulWidget extends State<MyStatefulWidget> {
 This function is called whenever the widget attached to the `State` is replaced by another widget. It is called when the widget is rebuilt, for example, when its parent widget changes. It provides the old widget as a parameter, allowing for comparison and updates.
 This function is also used very rarely.
 ### `dispose()`
-`dispose()` function is called when the State object is permanently removed from the widget tree. It is used to clean up resources such as closing streams or disposing of controllers.
+The `dispose()` method performs cleanup before the widget is permanently removed from the widget tree. `dispose()` function is called when the State object is permanently removed from the widget tree. It is used to clean up resources such as closing streams or disposing of controllers.
